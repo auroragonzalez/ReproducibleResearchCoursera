@@ -2,7 +2,7 @@
 title: "PA1_template.Rmd"
 author: "Aurora González Vidal"
 date: "01/17/2015"
-output: pdf_document
+output: html_document
 ---
 # Loading and preprocessing the data
 
@@ -93,6 +93,7 @@ difmd
 ```
 
 #Are there differences in activity patterns between weekdays and weekends?
+We create a new factor variable in the dataset named `nu` with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
 
 ```{r, echo = TRUE}
 
@@ -100,19 +101,27 @@ weekdays <- c("Monday", "Tuesday", "Wednesday", "Thursday",
               "Friday")
 df2$nu = as.factor(ifelse(is.element(weekdays(as.Date(df2$date)),weekdays), "Weekday", "Weekend"))
 
+```
 
+Now, we separate the set into two subsets and plot the results
 
-
+```{r, echo = TRUE}
 df3 <- df2[df2$nu == "Weekday",]
 df4 <-df2[df2$nu == "Weekend",]
 
 stepsByInterval3 <- tapply(df3$steps, df3$interval, mean, na.rm =T)
 
-plot(stepsByInterval3, type="l", xlab="Interval", ylab="Number of steps",main="Average number of steps per dayy by interval")
+plot(stepsByInterval3, type="l", xlab="Interval", ylab="Number of steps",
+     main="Average number of steps per day by interval during the weekdays", col = "orange", lwd = 3)
 
 stepsByInterval4 <- tapply(df4$steps, df4$interval, mean, na.rm =T)
 
-plot(stepsByInterval4, type="l", xlab="Interval", ylab="Number of steps",main="Average number of steps per dayy by interval")
+plot(stepsByInterval4, type="l", xlab="Interval", ylab="Number of steps",
+     main="Average number of steps per day by interval during the weekends", col = "orange", lwd = 3)
 
+```
+
+```{r, echo=TRUE}
+sessionInfo()
 ```
 
